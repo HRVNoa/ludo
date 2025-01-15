@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Ludo</title>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/fomantic-ui@2.9.3/dist/semantic.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/fomantic-ui@2.9.3/dist/semantic.min.js"></script>
+</head>
+<body>
+
+    <div class="ui container">
+        <div class="ui divider"></div>
+        <div th:insert="~{${dossier} :: ${view}}">
+
+        </div>
+        <div class="ui divider"></div>
+    </div>
+
+    <script>
+        $('.ui.search.selection.dropdown').dropdown({
+            keepSearchTerm: true
+        });
+        $('.ui.dropdown').dropdown('clear');
+    </script>
+</body>
+</html>

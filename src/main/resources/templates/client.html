@@ -1,0 +1,189 @@
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<div class="ui container" th:fragment="detail">
+    <div class="ui piled segment">
+        <h2 class="ui header">Client [[${client.nom}]] [[${client.prenom}]]</h2>
+        <p>Email : <span th:text="${client.email}"></span></p>
+        <p>Téléphone : <span th:text="${client.no_tel}"></span></p>
+        <p>Rue : <span th:text="${client.rue}"></span></p>
+        <p>Code postal : <span th:text="${client.code_postal}"></span></p>
+        <p>Ville : <span th:text="${client.ville}"></span></p>
+        <a href="/client/lister" class="ui gray button">Retour</a>
+    </div>
+</div>
+
+<div th:fragment="ajouter">
+    <h1 class="ui header"><i class="user icon"></i>Ajouter un client</h1>
+
+    <form th:object=${client} method="post">
+
+        <div class="ui form">
+            <div class="required fields">
+                <div class="field">
+                    <label for="nom">Nom :</label>
+                    <input type="text" th:field="*{nom}" id="nom">
+                    <ul>
+                        <li th:each="err : ${#fields.errors('nom')}" th:text="${err}" class="error"></li>
+                    </ul>
+                </div>
+                <div class="field">
+                    <label for="prenom">Prénom :</label>
+                    <input type="text" th:field="*{prenom}" id="prenom">
+                    <ul>
+                        <li th:each="err : ${#fields.errors('prenom')}" th:text="${err}" class="error"></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="fields">
+                <div class="required field">
+                    <label for="email">Email :</label>
+                    <input type="text" th:field="*{email}" id="email">
+                    <ul>
+                        <li th:each="err : ${#fields.errors('email')}" th:text="${err}" class="error"></li>
+                    </ul>
+                </div>
+                <div class="field">
+                    <label for="no_tel">Téléphone :</label>
+                    <input type="number" th:field="*{no_tel}" id="no_tel">
+                    <ul>
+                        <li th:each="err : ${#fields.errors('no_tel')}" th:text="${err}" class="error"></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="required fields">
+                <div class="field">
+                    <label for="rue">Rue :</label>
+                    <input type="text" th:field="*{rue}" id="rue">
+                    <ul>
+                        <li th:each="err : ${#fields.errors('rue')}" th:text="${err}" class="error"></li>
+                    </ul>
+                </div>
+                <div class="field">
+                    <label for="code_postal">Code postal :</label>
+                    <input type="number" minlength="5" maxlength="5" th:field="*{code_postal}" id="code_postal">
+                    <ul>
+                        <li th:each="err : ${#fields.errors('code_postal')}" th:text="${err}" class="error"></li>
+                    </ul>
+                </div>
+                <div class="field">
+                    <label for="ville">Ville :</label>
+                    <input type="text" th:field="*{ville}" id="ville">
+                    <ul>
+                        <li th:each="err : ${#fields.errors('ville')}" th:text="${err}" class="error"></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <button type="submit" class="ui green button">Ajouter</button>
+        <a href="/client/lister" class="ui gray button">Retour</a>
+    </form>
+</div>
+
+<div th:fragment="lister">
+    <h1 class="ui header"><i class="user icon"></i>Liste des clients</h1>
+    <a href="/client/ajouter" class="ui green button">Ajouter</a>
+
+    <table class="ui striped table">
+        <thead>
+        <tr>
+            <th>Nom</th>
+            <th>Prénom</th>
+            <th>Email</th>
+            <th>Téléphone</th>
+            <th>Rue</th>
+            <th>Code postal</th>
+            <th>Ville</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="client: ${clients}" th:onclick="location.href=[[@{'/client/' + ${client.no_client}}]]">
+            <td th:text="${client.nom}"></td>
+            <td th:text="${client.prenom}"></td>
+            <td th:text="${client.email}"></td>
+            <td th:text="${client.no_tel}"></td>
+            <td th:text="${client.rue}"></td>
+            <td th:text="${client.code_postal}"></td>
+            <td th:text="${client.ville}"></td>
+            <td>
+                <a th:href="@{'/client/modifier/' + ${client.no_client}}" class="ui blue button">Modifier</a>
+                <a th:href="@{'/client/supprimer/' + ${client.no_client}}" class="ui red button">Supprmier</a>
+            </td>
+        </tr>
+        </tbody>
+        <tfoot>
+
+        </tfoot>
+    </table>
+
+    <a href="/" class="ui gray button">Retour</a>
+</div>
+
+<div th:fragment="modifier">
+    <h1 class="ui header"><i class="user icon"></i>Modifier le client</h1>
+
+    <form th:object=${client} method="post">
+
+        <input type="hidden" th:field="*{no_client}" id="no_client">
+
+        <div class="ui form">
+            <div class="required fields">
+                <div class="field">
+                    <label for="nom">Nom :</label>
+                    <input type="text" th:field="*{nom}" id="nom">
+                    <ul>
+                        <li th:each="err : ${#fields.errors('nom')}" th:text="${err}" class="error"></li>
+                    </ul>
+                </div>
+                <div class="field">
+                    <label for="prenom">Prénom :</label>
+                    <input type="text" th:field="*{prenom}" id="prenom">
+                    <ul>
+                        <li th:each="err : ${#fields.errors('prenom')}" th:text="${err}" class="error"></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="fields">
+                <div class="required field">
+                    <label for="email">Email :</label>
+                    <input type="text" th:field="*{email}" id="email">
+                    <ul>
+                        <li th:each="err : ${#fields.errors('email')}" th:text="${err}" class="error"></li>
+                    </ul>
+                </div>
+                <div class="field">
+                    <label for="no_tel">Téléphone :</label>
+                    <input type="number" th:field="*{no_tel}" id="no_tel">
+                    <ul>
+                        <li th:each="err : ${#fields.errors('no_tel')}" th:text="${err}" class="error"></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="required fields">
+                <div class="field">
+                    <label for="rue">Rue :</label>
+                    <input type="text" th:field="*{rue}" id="rue">
+                    <ul>
+                        <li th:each="err : ${#fields.errors('rue')}" th:text="${err}" class="error"></li>
+                    </ul>
+                </div>
+                <div class="field">
+                    <label for="code_postal">Code postal :</label>
+                    <input type="number" minlength="5" maxlength="5" th:field="*{code_postal}" id="code_postal">
+                    <ul>
+                        <li th:each="err : ${#fields.errors('code_postal')}" th:text="${err}" class="error"></li>
+                    </ul>
+                </div>
+                <div class="field">
+                    <label for="ville">Ville :</label>
+                    <input type="text" th:field="*{ville}" id="ville">
+                    <ul>
+                        <li th:each="err : ${#fields.errors('ville')}" th:text="${err}" class="error"></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <button type="submit" class="ui green button">Modifier</button>
+        <a href="/client/lister" class="ui gray button">Retour</a>
+    </form>
+</div>

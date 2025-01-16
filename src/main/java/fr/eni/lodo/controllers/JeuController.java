@@ -15,6 +15,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/jeu")
@@ -68,6 +69,8 @@ public class JeuController {
             redirectAttributes.addFlashAttribute("jeu", jeu);
             return "redirect:/jeu/ajouter";
         }
+
+//        System.out.println(jeu.getGenres());
         jeuService.save(jeu);
 
         return "redirect:/jeu/lister";
@@ -79,6 +82,13 @@ public class JeuController {
         if (null == jeu){
             return "redirect:/jeu/lister";
         }
+        String genreNames;
+        List<String> temp = new ArrayList<>();
+        for (Genre genre : jeu.getGenres()){
+            temp.add(genre.getLibelle().toLowerCase());
+        }
+        genreNames = String.join(",", temp);
+        model.addAttribute("genreNames", genreNames);
         model.addAttribute("jeu", jeu);
         model.addAttribute("genres", genres);
         model.addAttribute("dossier", "jeu");
@@ -87,16 +97,9 @@ public class JeuController {
     }
 
     @PostMapping("/modifier/{id}")
-    public String modifierPost(Jeu jeu){
-        Jeu jeuModif = jeuService.findOneById(jeu.getNo_jeu());
-        jeuModif.setNo_jeu(jeu.getNo_jeu());
-        jeuModif.setTitre(jeu.getTitre());
-        jeuModif.setReference(jeu.getReference());
-        jeuModif.setDescription(jeu.getDescription());
-        jeuModif.setDuree(jeu.getDuree());
-        jeuModif.setAge_min(jeu.getAge_min());
-        jeuModif.setTarif_journee(jeu.getTarif_journee());
-        jeuModif.setGenres(jeu.getGenres());
+    public String modifierPost(@Valid Jeu jeu){
+//        System.out.println(jeu.getGenres());
+        jeuService.save(jeu);
         return "redirect:/jeu/lister";
     }
 

@@ -13,7 +13,15 @@ public class StringToGenreConverter implements Converter<String, Genre> {
     private GenreService genreService;
 
     @Override
-    public Genre convert(String id) {
-        return genreService.getGenre(Integer.parseInt(id));
+    public Genre convert(String libelle) {
+        System.out.println("!!CONVERT!!");
+        try {
+            int id = Integer.parseInt(libelle);
+            System.out.println(id);
+            return genreService.getGenre(id);
+        }catch (NumberFormatException numberFormatException ){
+            System.out.println(String.valueOf(libelle.charAt(0)).toUpperCase()+libelle.substring(1));
+            return genreService.getGenreByLibelle(String.valueOf(libelle.charAt(0)).toUpperCase()+libelle.substring(1));
+        }
     }
 }

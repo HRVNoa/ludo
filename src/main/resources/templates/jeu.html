@@ -77,9 +77,6 @@
                 </select>
 
                 <script>
-                    $('.ui.search.selection.dropdown').dropdown({
-                        keepSearchTerm: true
-                    });
                     $('.ui.dropdown').dropdown('clear');
                 </script>
                 <ul>
@@ -184,10 +181,20 @@
             </div>
             <div class="field">
                 <label for="genres">Genres :</label>
+                <div class="ui search clearable multiple selection dropdown clearable">
+                    <input type="hidden" id="genres" name="genres" th:value="${genreNames}">
+                    <i class="dropdown icon"></i>
+                    <div class="default text">Genres</div>
+                    <div class="menu">
+                        <div class="item" th:each="genre : ${genres}" th:text="${genre.libelle}" th:value="${genre.no_genre}"></div>
+                    </div>
+                </div>
 
-                <select class="ui fluid multiple search selection dropdown clearable" id="genres" th:field="*{genres}" value="1">
-                    <option th:each="genre: ${genres}" th:text="${genre.libelle}" th:value="${genre.no_genre}"></option>
-                </select>
+                <script>
+                    $('.ui.search.selection.dropdown').dropdown({
+                        keepSearchTerm: true
+                    });
+                </script>
                 <ul>
                     <li th:each="err : ${#fields.errors('genres')}" th:text="${err}" class="error"></li>
                 </ul>

@@ -9,31 +9,9 @@
         <p>Age minimum : <span th:text="${jeu.age_min}"></span></p>
         <p>Durée : <span th:text="${jeu.duree}"></span></p>
         <p>Genre :</p>
-        <ul>
-            <li th:each="genre: ${jeu.genres}" th:text="*{genre.libelle}"></li>
-        </ul>
-
-        <h1 class="ui header">Liste des exemplaires</h1>
-        <!--    <a href="/jeu/ajouter" class="ui green button">Ajouter</a>-->
-        <div class="ui cards">
-            <div class="card" th:each="exemplaire : ${exemplaires}">
-                <div class="content">
-                    <div class="header">
-                        Codebarre : [[${exemplaire.codebarre}]]
-                    </div>
-                    <div class="description">
-                        Louable : <span th:if="${exemplaire.louable} eq true">Oui</span><span th:if="${exemplaire.louable} eq false">Non</span>
-                    </div>
-                </div>
-                <div class="extra content">
-                    <div class="ui two buttons">
-                        <div class="ui basic blue button">Modifier</div>
-                        <div class="ui basic red button">Supprimer</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <br>
+            <ul>
+                <li th:each="genre: ${jeu.genres}" th:text="*{genre.libelle}"></li>
+            </ul>
         <a href="/jeu/lister" class="ui gray button">Retour</a>
     </div>
 </div>
@@ -112,40 +90,27 @@
 </div>
 
 <div th:fragment="lister">
-    <h1 class="ui header">Liste des jeux</h1>
-    <a href="/jeu/ajouter" class="ui green button">Ajouter</a>
+    <h1 class="ui header">Liste des exemplaires</h1>
+<!--    <a href="/jeu/ajouter" class="ui green button">Ajouter</a>-->
 
-    <table class="ui striped table">
-        <thead>
-        <tr>
-            <th>Titre</th>
-            <th>Reference</th>
-            <th>Description</th>
-            <th>Tarif journée (€)</th>
-            <th>Age min</th>
-            <th>Duree</th>
-            <th>Action</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="jeu: ${jeux}" th:onclick="location.href=[[@{'/jeu/' + ${jeu.no_jeu}}]]">
-            <td th:text="${jeu.titre}"></td>
-            <td th:text="${jeu.reference}"></td>
-            <td th:text="${jeu.description}"></td>
-            <td th:text="${jeu.tarif_journee}"></td>
-            <td th:text="${jeu.age_min}"></td>
-            <td th:text="${jeu.duree}"></td>
-            <td>
-                <a th:href="@{'/exemplaire/' + ${jeu.no_jeu}}" class="ui orange button fluid">Exemplaires</a>
-                <a th:href="@{'/jeu/modifier/' + ${jeu.no_jeu}}" class="ui blue button fluid">Modifier</a>
-                <a th:href="@{'/jeu/supprimer/' + ${jeu.no_jeu}}" class="ui red button fluid">Supprimer</a>
-            </td>
-        </tr>
-        </tbody>
-        <tfoot>
-
-        </tfoot>
-    </table>
+    <div class="ui cards">
+        <div class="card" th:each="exemplaire : ${exemplaires}">
+            <div class="content">
+                <div class="header">
+                    Codebarre : [[${exemplaire.codebarre}]]
+                </div>
+                <div class="description">
+                    Louable : [[${exemplaire.louable}]]
+                </div>
+            </div>
+            <div class="extra content">
+                <div class="ui two buttons">
+                    <div class="ui basic blue button">Modifier</div>
+                    <div class="ui basic red button">Supprimer</div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <a href="/" class="ui gray button">Retour</a>
 </div>

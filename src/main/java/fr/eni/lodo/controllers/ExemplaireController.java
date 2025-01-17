@@ -1,15 +1,12 @@
 package fr.eni.lodo.controllers;
 
 import fr.eni.lodo.models.Client;
-import fr.eni.lodo.models.ExemplaireJeu;
-import fr.eni.lodo.services.ClientService;
 import fr.eni.lodo.services.ExemplaireService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -25,10 +22,12 @@ public class ExemplaireController {
         this.exemplaireService = exemplaireService;
     }
 
-    @GetMapping("/lister")
-    public String lister(Model model){
-        model.addAttribute("clients", exemplaireService);
-        return "client/lister";
+    @GetMapping("/{id}")
+    public String lister(@PathVariable("id") final int id, Model model){
+        model.addAttribute("exemplaires", exemplaireService.findById(id));
+        model.addAttribute("dossier", "exemplaire");
+        model.addAttribute("view", "lister");
+        return "base";
     }
 
     @GetMapping("/ajouter")

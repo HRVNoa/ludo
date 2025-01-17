@@ -1,12 +1,10 @@
 package fr.eni.lodo.interfaces;
 
-import fr.eni.lodo.models.ExemplaireJeu;
+import fr.eni.lodo.models.Exemplaire;
 
 import java.util.List;
 
 public interface ExemplaireInterface {
 
-    void ajouterExemplaire(ExemplaireJeu client);
-
-    void supprimerExemplaire(ExemplaireJeu client);
+    List<Exemplaire> findById(int id);
 }

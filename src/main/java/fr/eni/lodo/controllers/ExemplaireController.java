@@ -1,12 +1,15 @@
 package fr.eni.lodo.controllers;
 
 import fr.eni.lodo.models.Client;
+import fr.eni.lodo.models.Exemplaire;
 import fr.eni.lodo.services.ExemplaireService;
+import fr.eni.lodo.services.JeuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -15,6 +18,9 @@ public class ExemplaireController {
 
     @Autowired
     private final ExemplaireService exemplaireService;
+
+    @Autowired
+    private JeuService jeuService;
 
     public ExemplaireController(
             ExemplaireService exemplaireService
@@ -30,18 +36,22 @@ public class ExemplaireController {
         return "base";
     }
 
-    @GetMapping("/ajouter")
-    public String ajouterGet(Model model){
-        Client client = new Client();
-        model.addAttribute("client", client);
-        return "client/ajouter";
+    @GetMapping("/ajouter/{id}")
+    public String ajouterGet(@PathVariable("id") final int id, Model model){
+        Exemplaire exemplaire = new Exemplaire();
+        exemplaire.setJeu(jeuService.findOneById(id));
+        model.addAttribute("exemplaire", exemplaire);
+        model.addAttribute("dossier", "exemplaire");
+        model.addAttribute("view", "ajouter");
+        return "base";
     }
-//
-//    @PostMapping("/ajouter")
-//    public String ajouterPost(Client client){
-//        clientService.ajouterClient(client);
-//        return "redirect:/client/lister";
-//    }
+
+    @PostMapping("/ajouter/{id}")
+    public String ajouterPost(@PathVariable("id") final int id, Exemplaire exemplaire){
+        exemplaire.setJeu(jeuService.findOneById(id));
+        exemplaireService.save(exemplaire);
+        return "redirect:/jeu/"+id;
+    }
 //
 //    @GetMapping("/{id}")
 //    public String detail(@PathVariable("id") final int id, Model model){

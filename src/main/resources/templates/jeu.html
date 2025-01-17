@@ -14,7 +14,9 @@
         </ul>
 
         <h1 class="ui header">Liste des exemplaires</h1>
-        <!--    <a href="/jeu/ajouter" class="ui green button">Ajouter</a>-->
+        <a th:href="@{'/exemplaire/ajouter/' + ${jeu.no_jeu}}" class="ui green button">Ajouter</a>
+        <br>
+        <br>
         <div class="ui cards">
             <div class="card" th:each="exemplaire : ${exemplaires}">
                 <div class="content">
@@ -28,7 +30,7 @@
                 <div class="extra content">
                     <div class="ui two buttons">
                         <div class="ui basic blue button">Modifier</div>
-                        <div class="ui basic red button">Supprimer</div>
+<!--                        <div class="ui basic red button">Supprimer</div>-->
                     </div>
                 </div>
             </div>

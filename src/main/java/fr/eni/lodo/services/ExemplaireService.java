@@ -20,4 +20,9 @@ public class ExemplaireService implements ExemplaireInterface {
     public List<Exemplaire> findById(int id) {
         return exemplaireRepository.findById(id);
     }
+
+    @Override
+    public void save(Exemplaire exemplaire) {
+        exemplaireRepository.save(exemplaire);
+    }
 }

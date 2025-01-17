@@ -1,23 +1,17 @@
 package fr.eni.lodo.models;
 
-import java.util.List;
+public class Exemplaire {
 
-public class ExemplaireJeu {
-
-    private int no_exemplaire;
+    private Integer no_exemplaire;
     private String codebarre;
     private boolean louable;
-    private List<Jeu> jeux;
+    private Jeu jeu;
 
-    public int getNbExemplaire(){
-        return jeux.size();
-    }
-
-    public int getNo_exemplaire() {
+    public Integer getNo_exemplaire() {
         return no_exemplaire;
     }
 
-    public void setNo_exemplaire(int no_exemplaire) {
+    public void setNo_exemplaire(Integer no_exemplaire) {
         this.no_exemplaire = no_exemplaire;
     }
 
@@ -37,15 +31,11 @@ public class ExemplaireJeu {
         this.louable = louable;
     }
 
-    public List<Jeu> getJeux() {
-        return jeux;
+    public Jeu getJeu() {
+        return jeu;
     }
 
-    public void setJeux(List<Jeu> jeux) {
-        this.jeux = jeux;
-    }
-
-    public void addJeu(Jeu jeu){
-        jeux.add(jeu);
+    public void setJeu(Jeu jeu) {
+        this.jeu = jeu;
     }
 }

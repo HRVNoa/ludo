@@ -4,6 +4,7 @@ import fr.eni.lodo.models.Client;
 import fr.eni.lodo.models.Genre;
 import fr.eni.lodo.models.Jeu;
 import fr.eni.lodo.services.ClientService;
+import fr.eni.lodo.services.ExemplaireService;
 import fr.eni.lodo.services.JeuService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,9 @@ public class JeuController {
 
     @Autowired
     private final JeuService jeuService;
+
+    @Autowired
+    private ExemplaireService exemplaireService;
 
     List<Genre> genres = new ArrayList<>();
 
@@ -108,6 +112,7 @@ public class JeuController {
         Jeu jeu = jeuService.findOneById(id);
         if (null != jeu){
             model.addAttribute("jeu", jeu);
+            model.addAttribute("exemplaires", exemplaireService.findById(id));
             model.addAttribute("dossier", "jeu");
             model.addAttribute("view", "detail");
             return "base";

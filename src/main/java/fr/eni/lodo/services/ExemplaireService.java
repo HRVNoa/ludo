@@ -17,7 +17,12 @@ public class ExemplaireService implements ExemplaireInterface {
     private ExemplaireRepository exemplaireRepository;
 
     @Override
-    public List<Exemplaire> findById(int id) {
+    public Exemplaire findById(int id) {
+        return exemplaireRepository.findById(id);
+    }
+
+    @Override
+    public Exemplaire findAllById(int id) {
         return exemplaireRepository.findById(id);
     }
 

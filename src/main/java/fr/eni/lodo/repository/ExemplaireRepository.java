@@ -22,9 +22,9 @@ public class ExemplaireRepository {
     @Autowired
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
-    public List<Exemplaire> findById(int id){
+    public Exemplaire findById(int id){
         String sql = "select codebarre, louable from exemplaire WHERE jeu = "+id;
-        return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Exemplaire.class));
+        return jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(Exemplaire.class));
     }
 
     public void save(Exemplaire exemplaire) {

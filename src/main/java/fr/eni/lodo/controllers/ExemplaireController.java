@@ -52,18 +52,22 @@ public class ExemplaireController {
         exemplaireService.save(exemplaire);
         return "redirect:/jeu/"+id;
     }
-//
-//    @GetMapping("/{id}")
-//    public String detail(@PathVariable("id") final int id, Model model){
-//        Client client = clientService.getClient(id);
-//        if (null != client){
-//            model.addAttribute("client", client);
-//            return "client/detail";
-//        }else{
-//            return "redirect:/client/lister";
-//        }
-//    }
-//
+
+    @GetMapping("/modifier/{id}")
+    public String modifierGet(@PathVariable("id") final int id, Model model){
+        Exemplaire exemplaire = exemplaireService.findById(id);
+        model.addAttribute("exemplaire", exemplaire);
+        model.addAttribute("dossier", "exemplaire");
+        model.addAttribute("view", "ajouter");
+        return "base";
+    }
+
+    @PostMapping("/modifier/{id}")
+    public String modifierPost(@PathVariable("id") final int id, Exemplaire exemplaire){
+        exemplaireService.save(exemplaire);
+        return "redirect:/jeu/"+id;
+    }
+
 //    @GetMapping("/supprimer/{id}")
 //    public String detail(@PathVariable("id") final int id){
 //        clientService.supprimerClient(clientService.getClient(id));

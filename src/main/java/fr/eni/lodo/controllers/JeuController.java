@@ -112,7 +112,7 @@ public class JeuController {
         Jeu jeu = jeuService.findOneById(id);
         if (null != jeu){
             model.addAttribute("jeu", jeu);
-            model.addAttribute("exemplaires", exemplaireService.findById(id));
+            model.addAttribute("exemplaires", exemplaireService.findAllById(id));
             model.addAttribute("dossier", "jeu");
             model.addAttribute("view", "detail");
             return "base";

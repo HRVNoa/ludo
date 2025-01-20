@@ -22,8 +22,13 @@ public class ExemplaireRepository {
     @Autowired
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
+    public List<Exemplaire> findByIdJeu(int id){
+        String sql = "select no_exemplaire, codebarre, louable from exemplaire WHERE jeu = "+id;
+        return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Exemplaire.class));
+    }
+
     public Exemplaire findById(int id){
-        String sql = "select codebarre, louable from exemplaire WHERE jeu = "+id;
+        String sql = "select no_exemplaire, codebarre, louable, jeu from exemplaire WHERE no_exemplaire = "+id;
         return jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(Exemplaire.class));
     }
 
@@ -32,10 +37,11 @@ public class ExemplaireRepository {
                 .addValue("no_exemplaire", exemplaire.getNo_exemplaire())
                 .addValue("codebarre", exemplaire.getCodebarre())
                 .addValue("louable", exemplaire.isLouable())
-                .addValue("jeu", exemplaire.getJeu().getNo_jeu())
                 ;
         if (exemplaire.getNo_exemplaire() == null){
             // ajout
+
+            params.addValue("jeu", exemplaire.getJeu().getNo_jeu());
             String sql =   "INSERT INTO exemplaire(codebarre, louable, jeu) " +
                             "VALUES (:codebarre, :louable, :jeu);";
             KeyHolder keyHolder = new GeneratedKeyHolder();
@@ -45,11 +51,16 @@ public class ExemplaireRepository {
         }else{
             // modif
             String sql =    "UPDATE exemplaire " +
-                            "SET codebarre=:codebarre, louable=:louable, jeu=:jeu " +
+                            "SET codebarre=:codebarre, louable=:louable " +
                             "WHERE no_exemplaire=:no_exemplaire;";
             KeyHolder keyHolder = new GeneratedKeyHolder();
             namedParameterJdbcTemplate.update(sql, params, keyHolder, new String[]{"no_exemplaire"});
         }
+    }
+
+    public void supprimer(int id){
+        String sql = "DELETE FROM exemplaire WHERE no_exemplaire = "+id;
+        jdbcTemplate.update(sql);
     }
 
 }

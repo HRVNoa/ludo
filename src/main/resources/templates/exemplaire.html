@@ -61,7 +61,8 @@
 
     <form th:object=${exemplaire} method="post">
 
-        <input type="text" th:field="*{no_exemplaire}">
+        <input type="hidden" th:field="*{no_exemplaire}">
+        <input type="hidden" th:field="*{jeu}">
 
         <div class="ui form">
             <div class="two fields">
@@ -81,7 +82,7 @@
                 </div>
             </div>
         </div>
-        <button type="submit" class="ui green button">Ajouter</button>
+        <button type="submit" class="ui green button">Modifier</button>
 
     </form>
 </div>

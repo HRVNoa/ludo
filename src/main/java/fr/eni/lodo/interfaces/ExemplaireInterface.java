@@ -8,7 +8,9 @@ public interface ExemplaireInterface {
 
     Exemplaire findById(int id);
 
+    List<Exemplaire> findByIdJeu(int id);
+
     void save(Exemplaire exemplaire);
 
-    Exemplaire findAllById(int id);
+    void supprimer(int id);
 }

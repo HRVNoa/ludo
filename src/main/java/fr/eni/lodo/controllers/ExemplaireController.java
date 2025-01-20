@@ -28,13 +28,13 @@ public class ExemplaireController {
         this.exemplaireService = exemplaireService;
     }
 
-    @GetMapping("/{id}")
-    public String lister(@PathVariable("id") final int id, Model model){
-        model.addAttribute("exemplaires", exemplaireService.findById(id));
-        model.addAttribute("dossier", "exemplaire");
-        model.addAttribute("view", "lister");
-        return "base";
-    }
+//    @GetMapping("/{id}")
+//    public String lister(@PathVariable("id") final int id, Model model){
+//        model.addAttribute("exemplaires", exemplaireService.findById(id));
+//        model.addAttribute("dossier", "exemplaire");
+//        model.addAttribute("view", "lister");
+//        return "base";
+//    }
 
     @GetMapping("/ajouter/{id}")
     public String ajouterGet(@PathVariable("id") final int id, Model model){
@@ -58,19 +58,22 @@ public class ExemplaireController {
         Exemplaire exemplaire = exemplaireService.findById(id);
         model.addAttribute("exemplaire", exemplaire);
         model.addAttribute("dossier", "exemplaire");
-        model.addAttribute("view", "ajouter");
+        model.addAttribute("view", "modifier");
         return "base";
     }
 
     @PostMapping("/modifier/{id}")
     public String modifierPost(@PathVariable("id") final int id, Exemplaire exemplaire){
+        System.out.println(exemplaire.getNo_exemplaire());
         exemplaireService.save(exemplaire);
-        return "redirect:/jeu/"+id;
+        return "redirect:/jeu/lister";
     }
 
-//    @GetMapping("/supprimer/{id}")
-//    public String detail(@PathVariable("id") final int id){
-//        clientService.supprimerClient(clientService.getClient(id));
-//        return "redirect:/client/lister";
-//    }
+    @GetMapping("/supprimer/{id}")
+    public String detail(@PathVariable("id") final int id){
+//        Exemplaire exemplaire = exemplaireService.findById(id);
+//        int idJeu = exemplaire.getJeu().getNo_jeu();
+        exemplaireService.supprimer(id);
+        return "redirect:/jeu/lister";
+    }
 }

@@ -29,8 +29,8 @@
                 </div>
                 <div class="extra content">
                     <div class="ui two buttons">
-                        <div class="ui basic blue button">Modifier</div>
-<!--                        <div class="ui basic red button">Supprimer</div>-->
+                        <a th:href="'/exemplaire/modifier/'+${exemplaire.no_exemplaire}" class="ui basic blue button">Modifier</a>
+                        <a th:href="'/exemplaire/supprimer/'+${exemplaire.no_exemplaire}" class="ui basic red button">Supprimer</a>
                     </div>
                 </div>
             </div>

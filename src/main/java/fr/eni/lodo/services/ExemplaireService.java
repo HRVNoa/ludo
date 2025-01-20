@@ -22,12 +22,17 @@ public class ExemplaireService implements ExemplaireInterface {
     }
 
     @Override
-    public Exemplaire findAllById(int id) {
-        return exemplaireRepository.findById(id);
+    public List<Exemplaire> findByIdJeu(int id) {
+        return exemplaireRepository.findByIdJeu(id);
     }
 
     @Override
     public void save(Exemplaire exemplaire) {
         exemplaireRepository.save(exemplaire);
+    }
+
+    @Override
+    public void supprimer(int id) {
+        exemplaireRepository.supprimer(id);
     }
 }

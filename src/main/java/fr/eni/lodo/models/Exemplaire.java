@@ -5,7 +5,7 @@ public class Exemplaire {
     private Integer no_exemplaire;
     private String codebarre;
     private boolean louable;
-    private Jeu jeu;
+    private Jeu no_jeu;
 
     public Integer getNo_exemplaire() {
         return no_exemplaire;
@@ -31,11 +31,11 @@ public class Exemplaire {
         this.louable = louable;
     }
 
-    public Jeu getJeu() {
-        return jeu;
+    public Jeu getNo_jeu() {
+        return no_jeu;
     }
 
-    public void setJeu(Jeu jeu) {
-        this.jeu = jeu;
+    public void setNo_jeu(Jeu jeu) {
+        this.no_jeu = jeu;
     }
 }

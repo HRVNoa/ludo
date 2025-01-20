@@ -33,17 +33,17 @@ public class JeuRepository {
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
     public List<Jeu> findAll(){
-        String sql = "select * from jeu";
+        String sql = "select * from jeux";
         return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Jeu.class));
     }
 
     public Optional<Jeu> findById(int id) {
-        String detailSql = "select * from jeu where no_jeu = "+id ;
+        String detailSql = "select * from jeux where no_jeu = "+id ;
 
-        String getGenreSql = "SELECT libelle FROM jeu JOIN jeu_genre ON jeu.no_jeu = jeu_genre.jeu " +
-                "JOIN genre ON jeu_genre.genre = genre.no_genre " +
-                "WHERE no_jeu = " + id +
-                " ORDER BY no_jeu ASC;";
+        String getGenreSql = "SELECT libelle FROM jeux JOIN jeux_genres ON jeux.no_jeu = jeux_genres.no_jeu " +
+                "JOIN genres ON jeux_genres.no_genre = genres.no_genre " +
+                "WHERE jeux.no_jeu = " + id +
+                " ORDER BY jeux.no_jeu ASC;";
 
         Jeu jeu = null;
         List<Genre> genre;
@@ -73,7 +73,7 @@ public class JeuRepository {
         KeyHolder keyHolder = new GeneratedKeyHolder();
         if (jeu.getNo_jeu() == null){
             // ajout
-            String sql =    "INSERT INTO jeu(titre, reference, description, tarif_journee, age_min, duree) " +
+            String sql =    "INSERT INTO jeux(titre, reference, description, tarif_journee, age_min, duree) " +
                             "VALUES (:titre, :reference, :description, :tarif_journee, :age_min, :duree);";
             namedParameterJdbcTemplate.update(sql, params, keyHolder, new String[]{"no_jeu"});
             jeu.setNo_jeu((Integer) keyHolder.getKey());
@@ -81,24 +81,24 @@ public class JeuRepository {
             System.out.println(keyHolder.getKey());
         }else{
             // modif
-            String sql =    "UPDATE jeu " +
+            String sql =    "UPDATE jeux " +
                             "SET titre=:titre, reference=:reference, description=:description, tarif_journee=:tarif_journee, age_min=:age_min, duree=:duree " +
                             "WHERE no_jeu = :no_jeu;";
             namedParameterJdbcTemplate.update(sql, params, keyHolder, new String[]{"no_jeu"});
         }
         // Gestion des genres
-        String deletesql = "DELETE FROM jeu_genre " +
-                "WHERE jeu = :jeu;";
-        MapSqlParameterSource paramsDelete = new MapSqlParameterSource().addValue("jeu", jeu.getNo_jeu());
-        namedParameterJdbcTemplate.update(deletesql, paramsDelete, keyHolder, new String[]{"jeu","genre"});
+        String deletesql = "DELETE FROM jeux_genres " +
+                "WHERE no_jeu = :no_jeu;";
+        MapSqlParameterSource paramsDelete = new MapSqlParameterSource().addValue("no_jeu", jeu.getNo_jeu());
+        namedParameterJdbcTemplate.update(deletesql, paramsDelete, keyHolder, new String[]{"no_jeu","no_genre"});
 
         for (Genre genre : jeu.getGenres()){
             if (genre != null){
-                MapSqlParameterSource paramsGenres = new MapSqlParameterSource().addValue("jeu", jeu.getNo_jeu()).addValue("genre", genre.getNo_genre());
-                String genresSql = "INSERT INTO jeu_genre(" +
-                        "jeu, genre)" +
-                        "VALUES (:jeu, :genre);";
-                namedParameterJdbcTemplate.update(genresSql, paramsGenres, keyHolder, new String[]{"jeu","genre"});
+                MapSqlParameterSource paramsGenres = new MapSqlParameterSource().addValue("no_jeu", jeu.getNo_jeu()).addValue("no_genre", genre.getNo_genre());
+                String genresSql = "INSERT INTO jeux_genres(" +
+                        "no_jeu, no_genre)" +
+                        "VALUES (:no_jeu, :no_genre);";
+                namedParameterJdbcTemplate.update(genresSql, paramsGenres, keyHolder, new String[]{"no_jeu","no_genre"});
             }
         }
     }

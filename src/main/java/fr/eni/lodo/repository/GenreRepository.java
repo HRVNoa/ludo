@@ -21,12 +21,12 @@ public class GenreRepository {
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
     public List<Genre> findAll(){
-        String sql = "select * from genre";
+        String sql = "select * from genres";
         return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Genre.class));
     }
 
     public Optional<Genre> findById(int id) {
-        String detailSql = "select * from genre where no_genre = "+id ;
+        String detailSql = "select * from genres where no_genre = "+id ;
         Genre genre = null;
         try {
             genre = jdbcTemplate.queryForObject(detailSql, new BeanPropertyRowMapper<>(Genre.class));
@@ -40,7 +40,7 @@ public class GenreRepository {
     }
 
     public Optional<Genre> findByLibelle(String libelle) {
-        String detailSql = "select * from genre where libelle like ?";
+        String detailSql = "select * from genres where libelle like ?";
         Genre genre = null;
         try {
             genre = jdbcTemplate.queryForObject(detailSql, new BeanPropertyRowMapper<>(Genre.class), libelle);

@@ -24,12 +24,12 @@ public class ClientRepository {
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
     public List<Client> findAll(){
-        String sql = "select * from client";
+        String sql = "select * from clients";
         return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Client.class));
     }
 
     public Optional<Client> findById(int id) {
-        String sql = "select * from client where no_client = ?" ;
+        String sql = "select * from clients where no_client = ?" ;
         Client client = null;
         try {
             client = jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(Client.class), id);
@@ -52,7 +52,7 @@ public class ClientRepository {
         ;
         if (client.getNo_client() == null){
             // ajout
-            String sql =   "INSERT INTO public.client(nom, prenom, email, no_tel, rue, code_postal, ville) " +
+            String sql =   "INSERT INTO clients(nom, prenom, email, no_tel, rue, code_postal, ville) " +
                     "VALUES (:nom, :prenom, :email, :no_tel, :rue, :code_postal, :ville);";
             KeyHolder keyHolder = new GeneratedKeyHolder();
             namedParameterJdbcTemplate.update(sql, params, keyHolder, new String[]{"no_client"});
@@ -60,7 +60,7 @@ public class ClientRepository {
             System.out.println(keyHolder.getKey());
         }else{
             // modif
-            String sql =    "UPDATE client " +
+            String sql =    "UPDATE clients " +
                             "SET nom=:nom, prenom=:prenom, email=:email, no_tel=:no_tel, rue=:rue, code_postal=:code_postal, ville=:ville " +
                             "WHERE no_client = :no_client;";
             KeyHolder keyHolder = new GeneratedKeyHolder();
@@ -69,7 +69,7 @@ public class ClientRepository {
     }
 
     public void supprimer(Client client){
-        String sql =    "DELETE FROM client " +
+        String sql =    "DELETE FROM clients " +
                 "WHERE no_client = ?;";
         jdbcTemplate.update(sql, client.getNo_client());
     }

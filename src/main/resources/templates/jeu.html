@@ -138,7 +138,6 @@
             <td th:text="${jeu.age_min}"></td>
             <td th:text="${jeu.duree}"></td>
             <td>
-                <a th:href="@{'/exemplaire/' + ${jeu.no_jeu}}" class="ui orange button fluid">Exemplaires</a>
                 <a th:href="@{'/jeu/modifier/' + ${jeu.no_jeu}}" class="ui blue button fluid">Modifier</a>
                 <a th:href="@{'/jeu/supprimer/' + ${jeu.no_jeu}}" class="ui red button fluid">Supprimer</a>
             </td>

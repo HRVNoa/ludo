@@ -4,7 +4,7 @@
 <div th:fragment="ajouter">
     <h1 class="ui header">Ajouter un exemplaire</h1>
 
-    <form th:object=${exemplaire} method="post" th:action="@{'./'+*{no_exemplaire}}">
+    <form th:object=${exemplaire} method="post" th:action="@{'./'+*{no_jeu}}">
 
         <div class="ui form">
             <div class="two fields">
@@ -13,6 +13,7 @@
                     <input type="text" th:field="*{codebarre}" id="codebarre">
                     <ul>
                         <li th:each="err : ${#fields.errors('codebarre')}" th:text="${err}" class="error"></li>
+                        <li th:if="${errorCodebarre} eq true" class="error">Le code barre existe déjà.</li>
                     </ul>
                 </div>
                 <div class="field">
@@ -70,6 +71,7 @@
                     <input type="text" th:field="*{codebarre}" id="codebarre">
                     <ul>
                         <li th:each="err : ${#fields.errors('codebarre')}" th:text="${err}" class="error"></li>
+                        <li th:if="${errorCodebarre} eq true" class="error">Le code barre existe déjà.</li>
                     </ul>
                 </div>
                 <div class="field">

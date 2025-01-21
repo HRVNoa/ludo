@@ -38,7 +38,7 @@ public class ExemplaireController {
     @GetMapping("/ajouter/{id}")
     public String ajouterGet(@PathVariable("id") final int id, Model model){
         Exemplaire exemplaire = new Exemplaire();
-        exemplaire.setNo_jeu(jeuService.findOneById(id));
+        exemplaire.setNo_jeu(jeuService.findOneById(id).getNo_jeu());
         model.addAttribute("exemplaire", exemplaire);
         model.addAttribute("dossier", "exemplaire");
         model.addAttribute("view", "ajouter");
@@ -46,8 +46,15 @@ public class ExemplaireController {
     }
 
     @PostMapping("/ajouter/{id}")
-    public String ajouterPost(@PathVariable("id") final int id, Exemplaire exemplaire){
-        exemplaire.setNo_jeu(jeuService.findOneById(id));
+    public String ajouterPost(@PathVariable("id") final int id, Exemplaire exemplaire, Model model){
+        exemplaire.setNo_jeu(jeuService.findOneById(id).getNo_jeu());
+        if (exemplaireService.codebarreExiste(exemplaire.getNo_exemplaire(), exemplaire.getCodebarre())){
+            model.addAttribute("errorCodebarre", true);
+            model.addAttribute("exemplaire", exemplaire);
+            model.addAttribute("dossier", "exemplaire");
+            model.addAttribute("view", "ajouter");
+            return "base";
+        }
         exemplaireService.save(exemplaire);
         return "redirect:/jeu/"+id;
     }
@@ -62,17 +69,24 @@ public class ExemplaireController {
     }
 
     @PostMapping("/modifier/{id}")
-    public String modifierPost(@PathVariable("id") final int id, Exemplaire exemplaire){
+    public String modifierPost(@PathVariable("id") final int id, Exemplaire exemplaire, Model model){
         System.out.println(exemplaire.getNo_exemplaire());
+        if (exemplaireService.codebarreExiste(exemplaire.getNo_exemplaire(), exemplaire.getCodebarre())){
+            model.addAttribute("errorCodebarre", true);
+            model.addAttribute("exemplaire", exemplaire);
+            model.addAttribute("dossier", "exemplaire");
+            model.addAttribute("view", "modifier");
+            return "base";
+        }
         exemplaireService.save(exemplaire);
-        return "redirect:/jeu/lister";
+        return "redirect:/jeu/"+exemplaire.getNo_jeu();
     }
 
     @GetMapping("/supprimer/{id}")
     public String detail(@PathVariable("id") final int id){
-//        Exemplaire exemplaire = exemplaireService.findById(id);
-//        int idJeu = exemplaire.getJeu().getNo_jeu();
+        Exemplaire exemplaire = exemplaireService.findById(id);
+        int idJeu = exemplaire.getNo_jeu();
         exemplaireService.supprimer(id);
-        return "redirect:/jeu/lister";
+        return "redirect:/jeu/"+idJeu;
     }
 }

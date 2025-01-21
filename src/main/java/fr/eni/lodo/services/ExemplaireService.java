@@ -35,4 +35,9 @@ public class ExemplaireService implements ExemplaireInterface {
     public void supprimer(int id) {
         exemplaireRepository.supprimer(id);
     }
+
+    @Override
+    public boolean codebarreExiste(int no_exemplaire, String codebarre) {
+        return exemplaireRepository.codebarreExiste(no_exemplaire, codebarre);
+    }
 }

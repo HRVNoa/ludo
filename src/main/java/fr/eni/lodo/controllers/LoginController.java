@@ -10,10 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class LoginController {
 
     @GetMapping
-    public String login(Model model){
-        model.addAttribute("dossier", "login");
-        model.addAttribute("view", "login");
-        return "base";
+    public String login(){
+        return "login";
     }
 
 }

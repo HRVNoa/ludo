@@ -15,4 +15,6 @@ public interface ExemplaireInterface {
     void supprimer(int id);
 
     boolean codebarreExiste(int no_exemplaire, String codebarre);
+
+    boolean codebarreExiste(String codebarre);
 }

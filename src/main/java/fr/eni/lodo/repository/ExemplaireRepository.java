@@ -67,4 +67,9 @@ public class ExemplaireRepository {
         return !jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Exemplaire.class)).isEmpty();
     }
 
+    public boolean codebarreExiste(String codebarre){
+        String sql = "select * from exemplaires WHERE codebarre like '"+codebarre+"'";
+        return !jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Exemplaire.class)).isEmpty();
+    }
+
 }

@@ -40,4 +40,9 @@ public class ExemplaireService implements ExemplaireInterface {
     public boolean codebarreExiste(int no_exemplaire, String codebarre) {
         return exemplaireRepository.codebarreExiste(no_exemplaire, codebarre);
     }
+
+    @Override
+    public boolean codebarreExiste(String codebarre) {
+        return exemplaireRepository.codebarreExiste(codebarre);
+    }
 }

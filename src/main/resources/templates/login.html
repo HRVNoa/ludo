@@ -1,23 +1,38 @@
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Ludo</title>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/fomantic-ui@2.9.3/dist/semantic.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/fomantic-ui@2.9.3/dist/semantic.min.js"></script>
+</head>
+<body>
 
-<div th:fragment="login">
+    <div class="ui container">
+        <div class="ui divider"></div>
+        <div th:fragment="login">
 
-  <div th:if="${param.error}">
-    Information incorrecte.
-  </div>
-  <div th:if="${param.logout}">
-    You have been logged out.
-  </div>
-  <form class="ui form" th:action="@{/login}" method="post">
-    <div class="field">
-      <label>Identifiant</label>
-      <input type="text" name="username"/>
+            <div th:if="${param.error}">
+                Information incorrecte.
+            </div>
+            <div th:if="${param.logout}">
+                You have been logged out.
+            </div>
+            <form class="ui form" th:action="@{/login}" method="post">
+                <div class="field">
+                    <label>Identifiant</label>
+                    <input type="text" name="username"/>
+                </div>
+                <div class="field">
+                    <label>Mot de passe</label>
+                    <input type="password" name="password"/>
+                </div>
+                <button class="ui button" type="submit" value="Sign In">Se connecter</button>
+            </form>
+
+        </div>
+        <div class="ui divider"></div>
     </div>
-    <div class="field">
-      <label>Mot de passe</label>
-      <input type="password" name="password"/>
-    </div>
-    <button class="ui button" type="submit" value="Sign In">Se connecter</button>
-  </form>
-
-</div>
+</body>
+</html>

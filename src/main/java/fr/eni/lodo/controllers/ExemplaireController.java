@@ -48,7 +48,7 @@ public class ExemplaireController {
     @PostMapping("/ajouter/{id}")
     public String ajouterPost(@PathVariable("id") final int id, Exemplaire exemplaire, Model model){
         exemplaire.setNo_jeu(jeuService.findOneById(id).getNo_jeu());
-        if (exemplaireService.codebarreExiste(exemplaire.getNo_exemplaire(), exemplaire.getCodebarre())){
+        if (exemplaireService.codebarreExiste(exemplaire.getCodebarre())){
             model.addAttribute("errorCodebarre", true);
             model.addAttribute("exemplaire", exemplaire);
             model.addAttribute("dossier", "exemplaire");

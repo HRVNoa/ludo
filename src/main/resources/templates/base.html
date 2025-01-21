@@ -11,6 +11,10 @@
 
     <div class="ui container">
         <div class="ui divider"></div>
+        <form th:action="@{/logout}" method="post">
+            <input class="ui button" type="submit" value="Se déconnecter"/>
+        </form>
+        <div class="ui divider"></div>
         <div th:insert="~{${dossier} :: ${view}}">
 
         </div>

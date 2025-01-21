@@ -1,6 +1,5 @@
 package fr.eni.lodo.controllers;
 
-import fr.eni.lodo.models.Client;
 import fr.eni.lodo.models.Exemplaire;
 import fr.eni.lodo.services.ExemplaireService;
 import fr.eni.lodo.services.JeuService;
@@ -39,7 +38,7 @@ public class ExemplaireController {
     @GetMapping("/ajouter/{id}")
     public String ajouterGet(@PathVariable("id") final int id, Model model){
         Exemplaire exemplaire = new Exemplaire();
-        exemplaire.setJeu(jeuService.findOneById(id));
+        exemplaire.setNo_jeu(jeuService.findOneById(id));
         model.addAttribute("exemplaire", exemplaire);
         model.addAttribute("dossier", "exemplaire");
         model.addAttribute("view", "ajouter");
@@ -48,7 +47,7 @@ public class ExemplaireController {
 
     @PostMapping("/ajouter/{id}")
     public String ajouterPost(@PathVariable("id") final int id, Exemplaire exemplaire){
-        exemplaire.setJeu(jeuService.findOneById(id));
+        exemplaire.setNo_jeu(jeuService.findOneById(id));
         exemplaireService.save(exemplaire);
         return "redirect:/jeu/"+id;
     }

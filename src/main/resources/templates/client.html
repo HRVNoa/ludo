@@ -15,7 +15,7 @@
 <div th:fragment="ajouter">
     <h1 class="ui header"><i class="user icon"></i>Ajouter un client</h1>
 
-    <form th:object=${client} method="post">
+    <form th:object=${client} method="post" th:action="@{'./'}">
 
         <div class="ui form">
             <div class="required fields">
@@ -122,7 +122,7 @@
 <div th:fragment="modifier">
     <h1 class="ui header"><i class="user icon"></i>Modifier le client</h1>
 
-    <form th:object=${client} method="post">
+    <form th:object=${client} method="post" th:action="@{'./'+*{no_client}}">
 
         <input type="hidden" th:field="*{no_client}" id="no_client">
 

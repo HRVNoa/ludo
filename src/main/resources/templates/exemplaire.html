@@ -4,7 +4,7 @@
 <div th:fragment="ajouter">
     <h1 class="ui header">Ajouter un exemplaire</h1>
 
-    <form th:object=${exemplaire} method="post" th:action="@{'./'+*{no_exemplaire}}">
+    <form th:object=${exemplaire} method="post" th:action="@{'./'+*{no_jeu}}">
 
         <div class="ui form">
             <div class="two fields">
@@ -13,6 +13,7 @@
                     <input type="text" th:field="*{codebarre}" id="codebarre">
                     <ul>
                         <li th:each="err : ${#fields.errors('codebarre')}" th:text="${err}" class="error"></li>
+                        <li th:if="${errorCodebarre} eq true" class="error">Le code barre existe déjà.</li>
                     </ul>
                 </div>
                 <div class="field">
@@ -56,80 +57,33 @@
 </div>
 
 <div th:fragment="modifier">
-    <h1 class="ui header">Modifier le jeu</h1>
+    <h1 class="ui header">Modifier l'exemplaire</h1>
 
-    <form th:object=${jeu} method="post" th:action="@{'./'+*{no_jeu}}">
+    <form th:object=${exemplaire} method="post" th:action="@{'./'+*{no_jeu}}">
+
+        <input type="hidden" th:field="*{no_exemplaire}">
         <input type="hidden" th:field="*{no_jeu}" id="no_jeu">
+
         <div class="ui form">
             <div class="two fields">
                 <div class="field">
-                    <label for="titre">Titre :</label>
-                    <input type="text" th:field="*{titre}" id="titre">
+                    <label for="codebarre">Codebarre :</label>
+                    <input type="text" th:field="*{codebarre}" id="codebarre">
                     <ul>
-                        <li th:each="err : ${#fields.errors('titre')}" th:text="${err}" class="error"></li>
+                        <li th:each="err : ${#fields.errors('codebarre')}" th:text="${err}" class="error"></li>
+                        <li th:if="${errorCodebarre} eq true" class="error">Le code barre existe déjà.</li>
                     </ul>
                 </div>
                 <div class="field">
-                    <label for="reference">Ref :</label>
-                    <input type="text" th:field="*{reference}" id="reference">
+                    <label for="louable">Louable :</label>
+                    <input type="checkbox" th:field="*{louable}" id="louable">
                     <ul>
-                        <li th:each="err : ${#fields.errors('reference')}" th:text="${err}" class="error"></li>
+                        <li th:each="err : ${#fields.errors('louable')}" th:text="${err}" class="error"></li>
                     </ul>
                 </div>
-            </div>
-            <div class="field">
-                <label for="description">Description :</label>
-                <input type="text" th:field="*{description}" id="description">
-                <ul>
-                    <li th:each="err : ${#fields.errors('description')}" th:text="${err}" class="error"></li>
-                </ul>
-            </div>
-            <div class="three fields">
-                <div class="field">
-                    <label for="tarif_journee">Tarif journée :</label>
-                    <input type="number" th:field="*{tarif_journee}" id="tarif_journee">
-                    <ul>
-                        <li th:each="err : ${#fields.errors('tarif_journee')}" th:text="${err}" class="error"></li>
-                    </ul>
-                </div>
-                <div class="field">
-                    <label for="age_min">Age minimum :</label>
-                    <input type="number" th:field="*{age_min}" id="age_min">
-                    <ul>
-                        <li th:each="err : ${#fields.errors('age_min')}" th:text="${err}" class="error"></li>
-                    </ul>
-                </div>
-                <div class="field">
-                    <label for="duree">Duree :</label>
-                    <input type="number" th:field="*{duree}" id="duree">
-                    <ul>
-                        <li th:each="err : ${#fields.errors('duree')}" th:text="${err}" class="error"></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="field">
-                <label for="genres">Genres :</label>
-                <div class="ui search clearable multiple selection dropdown clearable">
-                    <input type="hidden" id="genres" name="genres" th:value="${genreNames}">
-                    <i class="dropdown icon"></i>
-                    <div class="default text">Genres</div>
-                    <div class="menu">
-                        <div class="item" th:each="genre : ${genres}" th:text="${genre.libelle}" th:value="${genre.no_genre}"></div>
-                    </div>
-                </div>
-
-                <script>
-                    $('.ui.search.selection.dropdown').dropdown({
-                        keepSearchTerm: true
-                    });
-                </script>
-                <ul>
-                    <li th:each="err : ${#fields.errors('genres')}" th:text="${err}" class="error"></li>
-                </ul>
             </div>
         </div>
-
         <button type="submit" class="ui green button">Modifier</button>
-        <a href="/jeu/lister" class="ui gray button">Retour</a>
+
     </form>
 </div>

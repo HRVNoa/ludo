@@ -24,6 +24,8 @@ public class WebSecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/client/modifier/**").hasRole("EMPLOYER")
                         .requestMatchers(HttpMethod.POST, "/jeu/ajouter").hasRole("EMPLOYER")
                         .requestMatchers(HttpMethod.POST, "/jeu/modifier/**").hasRole("EMPLOYER")
+                        .requestMatchers(HttpMethod.POST, "/exemplaire/ajouter/{id}").hasRole("EMPLOYER")
+                        .requestMatchers(HttpMethod.POST, "/exemplaire/modifier/{id}").hasRole("EMPLOYER")
 
                         .requestMatchers(HttpMethod.GET, "/client/ajouter").hasRole("EMPLOYER")
                         .requestMatchers(HttpMethod.GET, "/client/modifier/**").hasRole("EMPLOYER")
@@ -33,17 +35,16 @@ public class WebSecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/jeu/supprimer/**").hasRole("EMPLOYER")
 
                         .requestMatchers(HttpMethod.GET, "/client/lister").hasRole("EMPLOYER")
-                        .requestMatchers(HttpMethod.GET, "/jeu/lister").hasRole("CLIENT")
-                        .requestMatchers(HttpMethod.GET, "/jeu/lister").hasRole("EMPLOYER")
-                        .requestMatchers(HttpMethod.GET, "/jeu/{id}").hasRole("CLIENT")
-                        .requestMatchers(HttpMethod.GET, "/jeu/{id}").hasRole("EMPLOYER")
+                        .requestMatchers(HttpMethod.GET, "/jeu/lister").authenticated()
+                        .requestMatchers(HttpMethod.GET, "/jeu/{id}").authenticated()
                         .requestMatchers(HttpMethod.GET, "/client/{id}").hasRole("EMPLOYER")
 
                         .requestMatchers(HttpMethod.GET, "/exemplaire/ajouter/{id}").hasRole("EMPLOYER")
+                        .requestMatchers(HttpMethod.GET, "/exemplaire/modifier/{id}").hasRole("EMPLOYER")
+                        .requestMatchers(HttpMethod.GET, "/exemplaire/supprimer/{id}").hasRole("EMPLOYER")
 
-                        .requestMatchers(HttpMethod.GET, "/").hasRole("CLIENT")
-                        .requestMatchers(HttpMethod.GET, "/").hasRole("EMPLOYER")
-                        .anyRequest().denyAll()
+                        .requestMatchers(HttpMethod.GET, "/").authenticated()
+                        .anyRequest().authenticated()
                 )
                 .formLogin((form) -> form
                         .loginPage("/login")

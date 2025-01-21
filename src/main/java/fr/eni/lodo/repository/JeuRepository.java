@@ -50,7 +50,7 @@ public class JeuRepository {
         try {
             jeu = jdbcTemplate.queryForObject(detailSql, new BeanPropertyRowMapper<>(Jeu.class));
             if (null == jeu){
-                return Optional.empty();
+                return Optional.ofNullable(jeu);
             }
             genre = jdbcTemplate.query(getGenreSql, new BeanPropertyRowMapper<>(Genre.class));
             jeu.setGenres(genre);

@@ -6,7 +6,13 @@ import java.util.List;
 
 public interface ExemplaireInterface {
 
-    List<Exemplaire> findById(int id);
+    Exemplaire findById(int id);
+
+    List<Exemplaire> findByIdJeu(int id);
 
     void save(Exemplaire exemplaire);
+
+    void supprimer(int id);
+
+    boolean codebarreExiste(int no_exemplaire, String codebarre);
 }

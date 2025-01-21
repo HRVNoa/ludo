@@ -21,9 +21,14 @@ public class ExemplaireRepository {
     @Autowired
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
-    public List<Exemplaire> findById(int id){
-        String sql = "select codebarre, louable from exemplaires WHERE no_jeu = "+id;
+    public List<Exemplaire> findByIdJeu(int id){
+        String sql = "select no_exemplaire, codebarre, louable from exemplaires WHERE no_jeu = "+id;
         return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Exemplaire.class));
+    }
+
+    public Exemplaire findById(int id){
+        String sql = "select no_exemplaire, codebarre, louable, no_jeu from exemplaires WHERE no_exemplaire = "+id;
+        return jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(Exemplaire.class));
     }
 
     public void save(Exemplaire exemplaire) {
@@ -31,10 +36,11 @@ public class ExemplaireRepository {
                 .addValue("no_exemplaire", exemplaire.getNo_exemplaire())
                 .addValue("codebarre", exemplaire.getCodebarre())
                 .addValue("louable", exemplaire.isLouable())
-                .addValue("no_jeu", exemplaire.getNo_jeu().getNo_jeu())
+                .addValue("no_jeu", exemplaire.getNo_jeu())
                 ;
         if (exemplaire.getNo_exemplaire() == null){
             // ajout
+            params.addValue("jeu", exemplaire.getNo_jeu());
             String sql =   "INSERT INTO exemplaires(codebarre, louable, no_jeu) " +
                             "VALUES (:codebarre, :louable, :no_jeu);";
             KeyHolder keyHolder = new GeneratedKeyHolder();
@@ -49,6 +55,16 @@ public class ExemplaireRepository {
             KeyHolder keyHolder = new GeneratedKeyHolder();
             namedParameterJdbcTemplate.update(sql, params, keyHolder, new String[]{"no_exemplaire"});
         }
+    }
+
+    public void supprimer(int id){
+        String sql = "DELETE FROM exemplaires WHERE no_exemplaire = "+id;
+        jdbcTemplate.update(sql);
+    }
+
+    public boolean codebarreExiste(int no_exemplaire, String codebarre){
+        String sql = "select * from exemplaires WHERE codebarre like '"+codebarre+"' AND no_exemplaire <> " +no_exemplaire;
+        return !jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Exemplaire.class)).isEmpty();
     }
 
 }

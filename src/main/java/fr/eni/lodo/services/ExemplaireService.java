@@ -17,12 +17,27 @@ public class ExemplaireService implements ExemplaireInterface {
     private ExemplaireRepository exemplaireRepository;
 
     @Override
-    public List<Exemplaire> findById(int id) {
+    public Exemplaire findById(int id) {
         return exemplaireRepository.findById(id);
+    }
+
+    @Override
+    public List<Exemplaire> findByIdJeu(int id) {
+        return exemplaireRepository.findByIdJeu(id);
     }
 
     @Override
     public void save(Exemplaire exemplaire) {
         exemplaireRepository.save(exemplaire);
+    }
+
+    @Override
+    public void supprimer(int id) {
+        exemplaireRepository.supprimer(id);
+    }
+
+    @Override
+    public boolean codebarreExiste(int no_exemplaire, String codebarre) {
+        return exemplaireRepository.codebarreExiste(no_exemplaire, codebarre);
     }
 }

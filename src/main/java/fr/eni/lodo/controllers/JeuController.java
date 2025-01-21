@@ -5,6 +5,7 @@ import fr.eni.lodo.models.Genre;
 import fr.eni.lodo.models.Jeu;
 import fr.eni.lodo.services.ClientService;
 import fr.eni.lodo.services.ExemplaireService;
+import fr.eni.lodo.services.GenreService;
 import fr.eni.lodo.services.JeuService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,28 +24,13 @@ import java.util.stream.Collectors;
 public class JeuController {
 
     @Autowired
-    private final JeuService jeuService;
+    private JeuService jeuService;
+
+    @Autowired
+    private GenreService genreService;
 
     @Autowired
     private ExemplaireService exemplaireService;
-
-    List<Genre> genres = new ArrayList<>();
-
-    public JeuController(
-            JeuService jeuService
-    ) {
-        this.jeuService = jeuService;
-
-        Genre genre = new Genre();
-        genre.setNo_genre(1);
-        genre.setLibelle("Action");
-        Genre genre2 = new Genre();
-        genre2.setNo_genre(2);
-        genre2.setLibelle("Carte");
-
-        genres.add(genre);
-        genres.add(genre2);
-    }
 
     @GetMapping("/lister")
     public String lister(Model model){
@@ -59,7 +45,7 @@ public class JeuController {
         Jeu jeu = new Jeu();
 
         model.addAttribute("jeu", jeu);
-        model.addAttribute("genres", genres);
+        model.addAttribute("genres", genreService.getGenres());
         model.addAttribute("dossier", "jeu");
         model.addAttribute("view", "ajouter");
         return "base";
@@ -94,7 +80,7 @@ public class JeuController {
         genreNames = String.join(",", temp);
         model.addAttribute("genreNames", genreNames);
         model.addAttribute("jeu", jeu);
-        model.addAttribute("genres", genres);
+        model.addAttribute("genres", genreService.getGenres());
         model.addAttribute("dossier", "jeu");
         model.addAttribute("view", "modifier");
         return "base";

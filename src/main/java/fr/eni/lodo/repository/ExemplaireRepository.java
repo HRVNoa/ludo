@@ -22,7 +22,7 @@ public class ExemplaireRepository {
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
     public List<Exemplaire> findByIdJeu(int id){
-        String sql = "select no_exemplaire, codebarre, louable from exemplaire WHERE jeu = "+id;
+        String sql = "select codebarre, louable from exemplaires WHERE no_jeu = "+id;
         return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Exemplaire.class));
     }
 
@@ -40,7 +40,7 @@ public class ExemplaireRepository {
                 ;
         if (exemplaire.getNo_exemplaire() == null){
             // ajout
-            params.addValue("jeu", exemplaire.getJeu().getNo_jeu());
+            params.addValue("jeu", exemplaire.getNo_jeu().getNo_jeu());
             String sql =   "INSERT INTO exemplaires(codebarre, louable, no_jeu) " +
                             "VALUES (:codebarre, :louable, :no_jeu);";
             KeyHolder keyHolder = new GeneratedKeyHolder();

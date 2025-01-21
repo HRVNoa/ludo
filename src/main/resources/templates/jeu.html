@@ -43,7 +43,7 @@
 <div th:fragment="ajouter">
     <h1 class="ui header">Ajouter un jeu</h1>
 
-    <form th:object=${jeu} method="post">
+    <form th:object=${jeu} method="post" th:action="@{'./'+*{no_jeu}}">
 
 
         <div class="ui form">
@@ -155,7 +155,7 @@
 <div th:fragment="modifier">
     <h1 class="ui header">Modifier le jeu</h1>
 
-    <form th:object=${jeu} method="post">
+    <form th:object=${jeu} method="post" th:action="@{'./'+*{no_jeu}}">
         <input type="hidden" th:field="*{no_jeu}" id="no_jeu">
         <div class="ui form">
             <div class="two fields">
